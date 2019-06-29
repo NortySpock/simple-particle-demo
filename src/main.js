@@ -2,7 +2,6 @@
 const debugMode = false;
 const frameDebug = false;
 const targetFrameRate = 60;
-const backgroundColor = 0;
 
 let points_string = '';
 let points_string_location;
@@ -23,21 +22,22 @@ function reset() {
     canvas.drawingContext.imageSmoothingEnabled = false;
 
     frameRate(targetFrameRate);
-    background(0);
 
     Global.textColor = color(255);
+    Global.backgroundColor = color(0);
+    background(Global.backgroundColor);
 
-    textSize(14);
-    textStyle(NORMAL);
-    textFont('Courier New');
-    stroke(color(255));
-    fill(color(255));
+    // textSize(14);
+    // textStyle(NORMAL);
+    // textFont('Courier New');
+    // stroke(color(255));
+    // fill(color(255));
 
     Global.points = 0;
 
     Global.particleColor = color(0,255,0);
     Global.ParticleSystem = new ParticleSystem();
-    
+
     points_string_location = createVector(Global.canvasWidth*(19/24),20);
     FPS_string_location = createVector(10,20);
 }
@@ -57,10 +57,10 @@ function draw() {
     handleUserInput();
 
     //BACKGROUND
-    background(backgroundColor); //black color
+    background(Global.backgroundColor); //black color
 
     Global.ParticleSystem.run();
-    
+
     renderBackgroundUI()
 }
 
@@ -74,10 +74,7 @@ function mousePressed()
 //handles continuous presses
 var handleUserInput = function()
 {
-  if(keyIsDown(32)/*space*/ || mouseIsPressed)
-  {
 
-  }
 };
 
 function keyPressed() {
@@ -91,18 +88,18 @@ function keyPressed() {
 
   if(key == 'A' )
   {
-      Global.particleSpamRate = 10
+      Global.particleSpamRate = 10;
   }
 
   if(key == 'S')
   {
-    Global.particleSpamRate = 100
+    Global.particleSpamRate = 100;
   }
-  
+
   if(key == 'D')
   {
-    Global.particleSpamRate = 1000
-  } 
+    Global.particleSpamRate = 1000;
+  }
 
 };
 
@@ -126,10 +123,10 @@ function updateUIstuff()
 
 function renderBackgroundUI()
 {
-    textSize(14);
+    textSize(16);
     textStyle(NORMAL);
     textFont('Courier New');
-    stroke(Global.textColor);
+    stroke(Global.backgroundColor);
     fill(Global.textColor);
     text(FPS_string, FPS_string_location.x,FPS_string_location.y);
     text(points_string,points_string_location.x,points_string_location.y);
@@ -137,14 +134,6 @@ function renderBackgroundUI()
 
 function halfSecondUpdateLoop(){
   updateUIstuff();
-}
-
-function preFillBackgroundStars()
-{
-  while(Global.backgroundStars.length < backgroundStarCount)
-  {
-    Global.backgroundStars.push(new BackgroundStar());
-  }
 }
 
 function onCanvas(x,y)
@@ -159,7 +148,7 @@ function onCanvas(x,y)
   }
   return true;
 }
- 
+
 
 function isABrightColor(color)
 {
@@ -167,9 +156,9 @@ function isABrightColor(color)
   return (red(color)+green(color)+blue(color))>minColor;
 }
 
- 
 
- 
+
+
 
 function midpoint(x1,y1,x2,y2)
 {
@@ -182,8 +171,8 @@ function pointOnLine(x1,y1,x2,y2,fraction)
     return newpoint;
 }
 
- 
- 
+
+
 
 function resumeSoundIfContextBlocked()
 {
@@ -191,15 +180,4 @@ function resumeSoundIfContextBlocked()
   {
         getAudioContext().resume();
   }
-}
-
-function renderBackgroundUI()
-{
-    textSize(14);
-    textStyle(NORMAL);
-    textFont('Courier New');
-    stroke(Global.textColor);
-    fill(Global.textColor);
-    text(FPS_string, FPS_string_location.x,FPS_string_location.y);
-    text(points_string,points_string_location.x,points_string_location.y);
 }
