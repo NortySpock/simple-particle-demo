@@ -149,31 +149,6 @@ function onCanvas(x,y)
   return true;
 }
 
-
-function isABrightColor(color)
-{
-  let minColor = 100;
-  return (red(color)+green(color)+blue(color))>minColor;
-}
-
-
-
-
-
-function midpoint(x1,y1,x2,y2)
-{
-    return pointOnLine(x1,y1,x2,y2,0.5);
-}
-
-function pointOnLine(x1,y1,x2,y2,fraction)
-{
-    let newpoint = {x:(x1+x2)*fraction,y:(y1+y2)*fraction}
-    return newpoint;
-}
-
-
-
-
 function resumeSoundIfContextBlocked()
 {
   if (getAudioContext().state !== 'running')
